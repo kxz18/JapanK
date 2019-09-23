@@ -1,5 +1,8 @@
+#!/usr/bin/python
+# -*- coding:utf-8 -*-
+
 import random
-from formats.FormatPrint import myPrint, printLine
+from core.display import myPrint, printLine
 from data.structure import *
 
 def recite(_type, cursor, additional=[]):
@@ -43,3 +46,22 @@ def recite(_type, cursor, additional=[]):
         if not IDs:#pylint suggest using not IDs  instead of len(IDs)==0 to judge if it is empty
             print('All have been recited')
             break
+
+def showTable(tables, cursor):
+    '''show the contents of the selected tables'''
+    #loop tables(include names of tables to show)
+    for tableName in tables:
+        try:#get table info through its name
+            table = toTable(tableName)#TABLES[tableName]
+        except KeyError:
+            print('Table %s does not EXIST'%tableName)
+            continue
+
+        sql = 'SELECT * FROM %s;'%(table['name'])
+        cursor.execute(sql)
+        contents = cursor.fetchall()
+        printLine(table['columns'][1:],
+                  table['formats'][1:],
+                  divider=' ')
+        for data in contents:
+            printLine(data[1:], table['formats'][1:], divider=' ')

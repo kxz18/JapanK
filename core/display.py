@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding:utf-8 -*-
 
 def myPrint(target, width, _end='\n', hideOverLen=False):
     '''special format print for non-English
@@ -39,3 +41,18 @@ def printLine(info, formats, _end='\n', autoWrap = True, divider=''):
             info[i] = myPrint(info[i], formats[i], '', autoWrap)
             print(divider, end='')
         print('', end=_end)
+
+def __help__():
+    info = [
+        ('/', 'redo previous command'),
+        ('create [entry type] entry [word info]', 'create a word entry'),
+        ('show [table name]', 'show the whole vocabulary'),
+        ('update [table_name] SET [column1=value,...] where [some_column=some_value](use \'\' for texts)', 'update information'),
+        ('recite [types] [options]', 'start random word recite'),
+        ('delete [word] from [table]', 'delete an entry'),
+        ('quit(exit)', 'quit'),
+        ]
+    print('')
+    for i in info:
+        printLine(i, [26, 25], divider='  ')
+        print('') #use an empty line to divide item vertically

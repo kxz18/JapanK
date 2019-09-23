@@ -1,12 +1,15 @@
 import sqlite3
-from formats.FormatPrint import myPrint, printLine
-from formats.help import __help__
-from functions.create import createEntry, createTable
-from functions.show import showTable
-from functions.recite import recite
-from functions.delete import delete
-from functions.update import updateInfo
+#from formats.FormatPrint import myPrint, printLine
+#from formats.help import __help__
+#from functions.create import createEntry, createTable
+#from functions.show import showTable
+#from functions.recite import recite
+#from functions.delete import delete
+#from functions.update import updateInfo
 from data.structure import TABLES
+from core.display import myPrint, printLine, __help__
+from core.function import showTable, recite
+from core.operation import createEntry, createTable, updateInfo, delete
 
 def interaction():
     db = sqlite3.connect('./data/japanese.db')
@@ -19,11 +22,18 @@ def interaction():
     print('You can enter "help" for help')
 
     #get commands
+    lastCmd = ''
     while True:
         command = input('japanK> ').split(" ")
         for i in range(len(command)):#to lower case
             command[i] = command[i].lower()
         try:
+            if command[0] == '/':
+                if lastCmd != '':
+                    command = lastCmd
+                else:
+                    print("No previous command!")
+                    continue
             if command[0] == 'quit' or command[0] == 'exit':
                 break
             elif command[0] == 'help':
@@ -41,6 +51,7 @@ def interaction():
                 delete(command[1:], cursor)
             else:
                 print('Invalid command!')
+            lastCmd = command
             db.commit()
         except IndexError:
             print('missing arguments')
