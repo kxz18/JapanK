@@ -1,14 +1,7 @@
 import sqlite3
-#from formats.FormatPrint import myPrint, printLine
-#from formats.help import __help__
-#from functions.create import createEntry, createTable
-#from functions.show import showTable
-#from functions.recite import recite
-#from functions.delete import delete
-#from functions.update import updateInfo
 from data.structure import TABLES
 from core.display import myPrint, printLine, __help__
-from core.function import showTable, recite
+from core.function import showTable, recite, search
 from core.operation import createEntry, createTable, updateInfo, delete
 
 def interaction():
@@ -47,6 +40,8 @@ def interaction():
                 recite(command[1], cursor, command[2:])
             elif command[0] == 'update':
                 updateInfo(command, cursor)
+            elif command[0] == 'search':
+                search(command[1:], cursor)
             elif command[0] == 'delete':
                 delete(command[1:], cursor)
             else:

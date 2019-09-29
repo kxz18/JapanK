@@ -65,3 +65,37 @@ def showTable(tables, cursor):
                   divider=' ')
         for data in contents:
             printLine(data[1:], table['formats'][1:], divider=' ')
+
+def search(keyWords, cursor):
+    '''use sql search to get results(using 'like')'''
+    #divide parameters as keywords and destinations
+    if 'from' not in keyWords:#search in all tables
+        destinations = TABLES.values()
+        print('Searching in all tables\n')
+    else:#search in designated tables
+        posOfFrom = keyWords.index('from')
+        destinations = keyWords[posOfFrom+1:]
+        try:
+            for i in range(len(destinations)):
+                destinations[i] = toTable(destinations[i])
+        except ValueError:
+            print("Wrong table name")
+        keyWords = keyWords[0:posOfFrom]
+    
+    #search in tables
+    for table in destinations:
+        print('results in %s: '%(table['name']))
+        printLine(table['columns'][1:], table['formats'][1:], divider=' ')
+        for key in keyWords:
+            #organize like clause
+            condition = ''
+            for index in table['searchIndex']:
+                condition += "%s LIKE '%%%s%%' or "%(index, key)
+            condition = condition[0:-4] #get rid of the last 'or'
+            sql = 'SELECT * FROM %s where %s;'%(table['name'],condition)
+            cursor.execute(sql)
+            results = cursor.fetchall()
+            for data in results:
+                printLine(data[1:], table['formats'][1:], divider=' ')
+        print('')
+    return

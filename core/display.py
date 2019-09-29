@@ -30,7 +30,7 @@ def myPrint(target, width, _end='\n', hideOverLen=False):
     print(target, end=_end)
     return leftOver
 
-def printLine(info, formats, _end='\n', autoWrap = True, divider=''):
+def printLine(info, formats, _end='\n', autoWrap=True, divider=''):
     '''print a line conformed to formats, when auto Wrap is True, the function will print over-width part in a new line. the divider space will be added after each word'''
     #make a copy
     info = list(info)
@@ -47,6 +47,7 @@ def __help__():
         ('/', 'redo previous command'),
         ('create [entry type] entry [word info]', 'create a word entry'),
         ('show [table name]', 'show the whole vocabulary'),
+        ('search [parameter1, parameter2, ...] (from [table1, table2, ...])', 'search entries'),
         ('update [table_name] SET [column1=value,...] where [some_column=some_value](use \'\' for texts)', 'update information'),
         ('recite [types] [options]', 'start random word recite'),
         ('delete [word] from [table]', 'delete an entry'),
