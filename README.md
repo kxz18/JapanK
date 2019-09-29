@@ -94,6 +94,14 @@ recite <type> [options]
 - hiragana - 背诵时显示平假名
 - katakana - 背诵时显示片假名
 
+```
+//demo
+recite character katakana
+//此时通过显示片假名来背诵五十音图
+```
+
+
+
 ##### 交互
 
 1. 首先会显示背诵对象的平假名，并提示按**Enter**可以查看释义
@@ -125,3 +133,33 @@ delete <word> from <table>
 #### /
 
 该命令会重复执行上一轮指令
+
+
+
+### 表格详情和创建
+
+`data/structure.py`中存储了所有表格信息
+
+#### 创建
+
+想自行创建表格，只需按照一下步骤：
+
+1. 在`data/structure.py`中创建新表格的字典，格式之后细说
+
+2. 在表格汇总字典`TABLES`中添加表格名字和表格信息字典的对应关系
+
+3. 在`data/structure.py`的函数`toTable(_type)`中新增 if 分支，规定哪些关键词是指向这个表格
+
+#### structure.py 表格字典项目解释
+
+- name - 表格名称
+- columns - 以sql表格的格式书写表格的各字段名，其中注意第一项需要为“ID”，ID项之后会要求设置为自增，只是用来找到这个词条的唯一标识符，不会在show指令等展示词条的指令中输出ID。
+- col_types - sql方式按顺序说明表格各字段的数据类型，其中第一项（ID）需要设置为`INTEGER AUTOINCREMENT`，是否设置为`PRIMARY KEY`并不要紧
+- searchIndex - 此处输入的字段名是在search、delete等搜索操作中会被列入搜索列表的字段，例如`VOCABULARY`的此项为‘hiragana’，‘katakana’，‘kanji’，则搜索某关键词时会对每个词条检索这三项，如果有匹配到即把此词条加入搜索结果
+- formats - 为各字段输出时的宽度，可自行设置以调节适合自己眼球的输出宽度，其中不要忘了第一项是ID，不会输出，所有有效设置从第二位开始
+- has_active - 是否有active附属，若为True，则会在新建此表时自动添加名为active_tableName的附属表格，用于存储需要背诵的词条。例如vocabulary背诵时只会从active_vocabulary中随机抽词显示。此项只需给需要背诵的表格设置True。
+
+   
+
+   
+
