@@ -2,6 +2,8 @@
 
 ### 使用方式
 
+---
+
 #### create
 
 创建新词条
@@ -22,6 +24,8 @@ create <entry type> entry [word info]
 
 - 建议不加
 
+---
+
 #### show
 
 展示现有的表
@@ -37,6 +41,8 @@ show <table name>
   - vocabulary/words - 所有单词
   - fifty/character - 五十音
   - sentence - 所有句子
+
+---
 
 #### search
 
@@ -60,6 +66,8 @@ search <parameter1, parameter2, ...> (from <table1, table2, ...>)
 
 可选参数，如果填了，就从指定的表格中搜索结果
 
+---
+
 #### update
 
 更新已有的词条
@@ -70,6 +78,8 @@ update <table_name> SET <column1=value1, column2=value2, ...> where <column=valu
 
 - 与sql标准语句格式相同，`set`后为需要改变的选项，`where`后为改变的对象。
 - 如果成功就会输出`successfully updated`
+
+---
 
 #### recite
 
@@ -100,8 +110,6 @@ recite character katakana
 //此时通过显示片假名来背诵五十音图
 ```
 
-
-
 ##### 交互
 
 1. 首先会显示背诵对象的平假名，并提示按**Enter**可以查看释义
@@ -109,6 +117,8 @@ recite character katakana
    - 按**Enter**继续下一个
    - 按**d**将该单词从需要背诵的词汇表中删除
    - 按**0**退出背诵模式
+
+---
 
 #### delete
 
@@ -126,15 +136,19 @@ delete <word> from <table>
 
 指定从哪个表格中删除
 
+---
+
 #### quit（exit）
 
 退出
+
+---
 
 #### /
 
 该命令会重复执行上一轮指令
 
-
+---
 
 ### 表格详情和创建
 
@@ -153,13 +167,20 @@ delete <word> from <table>
 #### structure.py 表格字典项目解释
 
 - name - 表格名称
+
 - columns - 以sql表格的格式书写表格的各字段名，其中注意第一项需要为“ID”，ID项之后会要求设置为自增，只是用来找到这个词条的唯一标识符，不会在show指令等展示词条的指令中输出ID。
+
 - col_types - sql方式按顺序说明表格各字段的数据类型，其中第一项（ID）需要设置为`INTEGER AUTOINCREMENT`，是否设置为`PRIMARY KEY`并不要紧
+
 - searchIndex - 此处输入的字段名是在search、delete等搜索操作中会被列入搜索列表的字段，例如`VOCABULARY`的此项为‘hiragana’，‘katakana’，‘kanji’，则搜索某关键词时会对每个词条检索这三项，如果有匹配到即把此词条加入搜索结果
+
 - formats - 为各字段输出时的宽度，可自行设置以调节适合自己眼球的输出宽度，其中不要忘了第一项是ID，不会输出，所有有效设置从第二位开始
+
 - has_active - 是否有active附属，若为True，则会在新建此表时自动添加名为active_tableName的附属表格，用于存储需要背诵的词条。例如vocabulary背诵时只会从active_vocabulary中随机抽词显示。此项只需给需要背诵的表格设置True。
 
-   
+---
+
+
 
    
 
