@@ -148,6 +148,18 @@ delete <word> from <table>
 
 该命令会重复执行上一轮指令
 
+例如，想进行一系列单词添加，可以在第一次`create`指令后以`/`重复这条指令，方便连续添加
+
+```
+//demo
+japanK> create character entry
+hiragana: あ
+katakana: ア
+roman: a
+japanK> /		//继续添加
+hiragana: 
+```
+
 ---
 
 ### 表格详情和创建
