@@ -10,7 +10,11 @@ def recite(_type, cursor, additional=[]):
     refer to by _type, then randomly choose from
     the active list of the table to recite'''
 
-    table = toTable(_type)
+    try:
+        table = toTable(_type)
+    except KeyError:
+        print("Wrong type!")
+        return
     if table == 'ILikeAGirl':#related table not found
         return
     sql = 'SELECT * FROM active_%s;'%(table['name'])

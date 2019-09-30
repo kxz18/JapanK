@@ -7,10 +7,11 @@ from data.structure import *
 
 def createEntry(kind, inList, cursor):
     '''create new entry according to different type'''
-    if kind.find('word') != -1:
-        table = VOCABULARY
-    elif kind.find('character') != -1:
-        table = FIFTY
+    try:
+        table = toTable(kind)
+    except KeyError:
+        print("Wrong entry type")
+        return
     #input data should not include ID which automatically increase
     if len(inList) != len(table['columns'])-1:
         inList.clear()
